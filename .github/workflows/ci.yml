@@ -19,3 +19,34 @@ jobs:
       - run: flutter pub get
       - run: flutter analyze
       - run: flutter test
+  build_apk:
+    name: Build Android
+    needs: [flutter_test]
+    runs-on: windows
+    steps:
+      - uses: actions/checkout@vs
+      - uses: actions/setup-java@v2
+        with:
+          java-version: "12.x"
+      - uses: subosito/flutter-actions@v1
+        with:
+          channel: "stable"
+      - run: flutter pub get
+      - run: flutter clean
+      - run: flutter build apk
+
+  build_ios:
+    name: Build (ios)
+    needs: [flutter_test]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@vs
+      - uses: actions/setup-java@v2
+        with:
+          java-version: "12.x"
+      - uses: subosito/flutter-actions@v1
+        with:
+          channel: "stable"
+      - run: flutter pub get
+      - run: flutter clean
+      - run: flutter build ios
